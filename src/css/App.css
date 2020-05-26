@@ -7,6 +7,26 @@
   pointer-events: none;
 }
 
+.background-form {
+  background-color: cadetblue;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/Nevada-Apartadero-Merida-Venezuela.jpg");
+  background-size: cover;
+  padding: 0px;
+  margin: 0px;
+}
+
+.shadow-form {
+  margin: 20px;
+  padding: 10px;
+  opacity: 80%;
+  text-align: center;
+}
+
+.forms {
+  opacity: 100%;
+  text-align: justify;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
