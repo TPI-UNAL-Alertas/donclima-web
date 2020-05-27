@@ -9,7 +9,7 @@ import { faFilePdf,faSnowflake,faClipboardCheck} from '@fortawesome/free-solid-s
 class Home extends React.Component{
     render() {
         return (
-            <div>                
+            <div>
                 <div>
                     <div>
                         <h4 id="clima"></h4>

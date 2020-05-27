@@ -33,6 +33,20 @@
   filter: invert(1);
 }
 
+.footer-text {
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  color: #aaaaaa;
+}
+
+.footer-icon {
+  text-transform: none;
+  list-style: none;
+  color: white;
+  padding: 2px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
