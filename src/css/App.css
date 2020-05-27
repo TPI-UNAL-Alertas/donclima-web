@@ -1,14 +1,5 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
 .background-form {
-  background-color: cadetblue;
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/Nevada-Apartadero-Merida-Venezuela.jpg");
   background-size: cover;
   padding: 0px;
@@ -19,12 +10,27 @@
   margin: 20px;
   padding: 10px;
   opacity: 80%;
+  filter: invert(1);
   text-align: center;
 }
 
 .forms {
   opacity: 100%;
   text-align: justify;
+}
+
+.menu {
+  margin: 10px;
+}
+
+.card {
+  max-width: 18rem;
+  margin: 20px;
+}
+
+.btn-form {
+  text-align: center;
+  filter: invert(1);
 }
 
 @media (prefers-reduced-motion: no-preference) {
