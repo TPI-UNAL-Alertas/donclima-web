@@ -20,7 +20,8 @@ class FormSignUp extends React.Component{
       }
     render() {
         return (
-            <form className="needs-validation forms" noValidate>
+            <form className="needs-validation" noValidate>
+                <div className="forms">
                 <div className="form-row">
                     <div className="col-md-6 mb-3">
                     <label htmlFor="validationCustom01">Apellidos</label>
@@ -65,14 +66,14 @@ class FormSignUp extends React.Component{
                         <label htmlFor="inputPassword6">Contraseña</label>
                         <input type="password" id="inputPassword6" className="form-control mx-sm-3" aria-describedby="passwordHelpInline"/>
                         <small id="passwordHelpInline" className="text-muted">
-                        Must be 8-20 characters long.
+                        Mas de 8-20 caracteres de longitud.
                         </small>
                     </div>
                     <div className="form-group col-md-5 mb-3">
                         <label htmlFor="inputPassword6">Confirmar contraseña</label>
                         <input type="password" id="inputPassword6" className="form-control mx-sm-3" aria-describedby="passwordHelpInline"/>
                         <small id="passwordHelpInline" className="text-muted">
-                        Must be 8-20 characters long.
+                        Mas de 8-20 caracteres de longitud.
                         </small>
                     </div>
 
@@ -122,7 +123,8 @@ class FormSignUp extends React.Component{
                     </div>
                     </div>
                 </div>
-                <button className="btn btn-primary" type="submit">Submit form</button>
+                </div>
+                <button className="btn btn-warning btn-form" type="submit">Registrarse</button>
             </form>
             
         );
