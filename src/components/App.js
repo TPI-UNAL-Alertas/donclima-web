@@ -4,6 +4,8 @@ import SignUp from './SignUp';
 import Banner from './Banner';
 import Home from './Home';
 import Header from './Header';
+import LogIn from './LogIn';
+import Footer from './Footer';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
       <Header/>
       <Home/>
       <SignUp/>
+      <LogIn/>
+      <Footer/>
     </div>
   );
 }
