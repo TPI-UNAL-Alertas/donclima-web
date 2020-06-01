@@ -13,7 +13,9 @@ class Home extends React.Component{
                 <div>
                     <div>
                         <h4 id="clima"></h4>
-                        <Weather/>
+                        <Weather
+                            pronostico={this.props.pronostico}
+                        />
                     </div>
                     <div className="row justify-content-md-center">
                         <div className="card text-white bg-info mb-3" >

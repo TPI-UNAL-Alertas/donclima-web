@@ -1,24 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../css/App.css';
-import SignUp from './SignUp';
-import Banner from './Banner';
-import Home from './Home';
-import Header from './Header';
-import LogIn from './LogIn';
 import Footer from './Footer';
+import Router from './Router';
 
-function App() {
-  return (
-    <div >
+class App extends React.Component{
+
+  state={
+    pronostico: {}
+  }
+
+  agregarPronostico=(pronostico)=>{
+    this.setState({
+      pronostico:pronostico
+    })
+  }
+
+  render() {
+    return (
+      <div >
       
-      <Banner/>
-      <Header/>
-      <Home/>
-      <SignUp/>
-      <LogIn/>
+      
+      <Router
+        agregarPronostico={this.agregarPronostico}
+        pronostico={this.state.pronostico}
+      />
+      
+      
       <Footer/>
+      
     </div>
-  );
+    );
+  }  
 }
-
 export default App;

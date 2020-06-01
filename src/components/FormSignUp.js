@@ -1,38 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
+import "firebase/auth";
+import "firebase/database";
+import { useFirebaseApp, useUser } from 'reactfire';
 
-class FormSignUp extends React.Component{
-    function() {
-        'use strict';
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          let forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          let validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      }
-    render() {
+const FormSignUp = props =>{
+        
+    ///refs
+    const lastnameUserRef=React.createRef();
+    const nameUserRef=React.createRef();
+    const documentRef=React.createRef();
+    const emailRef=React.createRef();
+    const phoneRef=React.createRef();
+    const passwordRef=React.createRef();
+    const departmentRef=React.createRef();
+    const cityRef=React.createRef();
+
+    const firebase = useFirebaseApp();
+    const user = useUser();
+
+    const newUser= async (e)=>{
+        e.preventDefault();
+
+
+        const name=nameUserRef.current.value,
+            lastname=lastnameUserRef.current.value,
+            document=documentRef.current.value,
+            email=emailRef.current.value,
+            phone=phoneRef.current.value,
+            password=passwordRef.current.value,
+            department=departmentRef.current.value,
+            city=cityRef.current.value;
+
+            console.log(name,city);
+
+            await firebase.auth().createUserWithEmailAndPassword(email, password);
+            await firebase.database().ref('usuarios/'+document).set({
+                nombre: name,
+                apellido: lastname,
+                documento : document,
+                telefono: phone,
+                departamento: department,
+                ciudad: city
+            });
+
+            console.log('usuario',user);
+
+    }
+    
         return (
-            <form className="needs-validation" noValidate>
+            <form className="needs-validation" noValidate onSubmit={newUser}>
                 <div className="forms">
                 <div className="form-row">
                     <div className="col-md-6 mb-3">
                     <label htmlFor="validationCustom01">Apellidos</label>
-                    <input type="text" className="form-control" id="validationCustom01" defaultValue="" required/>
+                    <input ref={lastnameUserRef} type="text" className="form-control" id="validationCustom01" defaultValue="" required/>
                     <div className="valid-feedback">
                         Looks good!
                     </div>
                     </div>
                     <div className="col-md-6 mb-3">
                     <label htmlFor="validationCustom02">Nombres</label>
-                    <input type="text" className="form-control" id="validationCustom02" defaultValue="" required/>
+                    <input ref={nameUserRef} type="text" className="form-control" id="validationCustom02" defaultValue="" required/>
                     <div className="valid-feedback">
                         Looks good!
                     </div>
@@ -41,21 +69,21 @@ class FormSignUp extends React.Component{
                 <div className="form-row">
                     <div className="col-md-4 mb-3">
                     <label htmlFor="validationCustom01">Numero de Documento</label>
-                    <input type="text" className="form-control" id="validationCustom01" defaultValue="" required/>
+                    <input ref={documentRef} type="text" className="form-control" id="validationCustom01" defaultValue="" required/>
                     <div className="valid-feedback">
                         Looks good!
                     </div>
                     </div>
                     <div className="col-md-4 mb-3">
                     <label htmlFor="validationCustom01">Correo electrónico</label>
-                    <input type="text" className="form-control" id="validationCustom01" defaultValue="" required/>
+                    <input ref={emailRef} type="text" className="form-control" id="validationCustom01" defaultValue="" required/>
                     <div className="valid-feedback">
                         Looks good!
                     </div>
                     </div>
                     <div className="col-md-4 mb-3">
                     <label htmlFor="validationCustom02">Numero celular</label>
-                    <input type="text" className="form-control" id="validationCustom02" defaultValue="" required/>
+                    <input ref={phoneRef} type="text" className="form-control" id="validationCustom02" defaultValue="" required/>
                     <div className="valid-feedback">
                         Looks good!
                     </div>
@@ -64,7 +92,7 @@ class FormSignUp extends React.Component{
                 <div className="form-row">
                     <div className="form-group col-md-5 mb-3">
                         <label htmlFor="inputPassword6">Contraseña</label>
-                        <input type="password" id="inputPassword6" className="form-control mx-sm-3" aria-describedby="passwordHelpInline"/>
+                        <input ref={passwordRef} type="password" id="inputPassword6" className="form-control mx-sm-3" aria-describedby="passwordHelpInline"/>
                         <small id="passwordHelpInline" className="text-muted">
                         Mas de 8-20 caracteres de longitud.
                         </small>
@@ -81,7 +109,7 @@ class FormSignUp extends React.Component{
                 <div className="form-row">
                 <div className="col-md-7 mb-3">
                     <label htmlFor="validationCustom04">Departamento de residencia</label>
-                    <select className="custom-select" id="validationCustom04" required>
+                    <select ref={departmentRef} className="custom-select" id="validationCustom04" required>
                         <option  disabled value="">Choose...</option>
                         <option>...</option>
                     </select>
@@ -91,7 +119,7 @@ class FormSignUp extends React.Component{
                     </div>
                     <div className="col-md-5 mb-3">
                     <label htmlFor="validationCustom04">Ciudad</label>
-                    <select className="custom-select" id="validationCustom04" required>
+                    <select ref={cityRef} className="custom-select" id="validationCustom04" required>
                         <option  disabled value="">Choose...</option>
                         <option>...</option>
                     </select>
@@ -128,6 +156,6 @@ class FormSignUp extends React.Component{
             </form>
             
         );
-    }
+    
 }
 export default FormSignUp;
