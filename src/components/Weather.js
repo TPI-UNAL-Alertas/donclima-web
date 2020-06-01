@@ -5,6 +5,7 @@ import { faTemperatureLow, faCloud, faWind, faUmbrella, faCloudSunRain, faBell }
 class Weather extends React.Component{
     
     render() {
+        const pronostico=this.props.pronostico;
         return (
             <div className="container">
                 <div className="row">
@@ -14,8 +15,8 @@ class Weather extends React.Component{
                             <div><h5><FontAwesomeIcon icon={faTemperatureLow}/> Temperatura: </h5></div>
                             <div><h5><FontAwesomeIcon icon={faCloud}/> Nubosidad: </h5></div>
                             <div><h5><FontAwesomeIcon icon={faUmbrella}/> Precipitación: </h5></div>
-                            <div><h5><FontAwesomeIcon icon={faWind}/> Vientos: </h5></div>
-                            <div><h5><FontAwesomeIcon icon={faCloudSunRain}/> Humedad: </h5></div>
+                            <div><h5><FontAwesomeIcon icon={faWind}/> Vientos: {pronostico['Cobertura total nubosa']} </h5></div>
+                            <div><h5><FontAwesomeIcon icon={faCloudSunRain}/> Humedad: {pronostico.Humedad}</h5></div>
                             <div><h5><FontAwesomeIcon icon={faBell}/> Alertas: </h5></div>
                             <p></p>      
                         </div>

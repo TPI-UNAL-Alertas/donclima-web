@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class Header extends React.Component{
     render() {
@@ -13,21 +14,21 @@ class Header extends React.Component{
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#clima">Pronostico</a>
+                            <a className="nav-link" href="/#clima">Pronostico</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#impactos">Impactos</a>
+                            <a className="nav-link" href="/#impactos">Impactos</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#consejos">Consejos</a>
+                            <a className="nav-link" href="/#consejos">Consejos</a>
                         </li>
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
-                        <button className="btn btn-outline-info my-2 my-sm-0 menu" type="submit">Iniciar Sesión</button>
-                        <button className="btn btn-info my-2 my-sm-0 menu" type="submit">Registrarse</button>
+                        <Link to="/login"><button to="/login" className="btn btn-outline-info my-2 my-sm-0 menu" type="submit">Iniciar Sesión</button></Link>
+                        <Link to="/signup"><button className="btn btn-info my-2 my-sm-0 menu" type="submit">Registrarse</button></Link>
                         </form>
                     </div>
                     </nav>
