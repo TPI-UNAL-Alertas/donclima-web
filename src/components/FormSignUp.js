@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "firebase/auth";
 import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
@@ -37,6 +37,7 @@ const FormSignUp = props =>{
             await firebase.database().ref('usuarios/'+document).set({
                 nombre: name,
                 apellido: lastname,
+                correo: email,
                 documento : document,
                 telefono: phone,
                 departamento: department,
