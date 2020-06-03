@@ -1,14 +1,14 @@
-import React, { Suspense } from 'react';
+import React,{Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import $ from 'jquery';
-//import Popper from 'popper.js';
+import $ from 'jquery';
+import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import firebaseConfig from './firebase-config';
+import firebaseConfig from './donclima-fb';
 import { FirebaseAppProvider } from 'reactfire';
 
 
