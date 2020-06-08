@@ -1,6 +1,7 @@
 import React from 'react';
 import Weather from './Weather';
 import Impacts from './Impacts';
+import Map from './Map';
 import Tips from './Tips';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilePdf,faSnowflake,faClipboardCheck} from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +11,14 @@ class Home extends React.Component{
     render() {
         return (
             <div>
+                <div>
+                    <Map
+                      googleMapURL= {"https://maps.googleapis.com/maps/api/js?key=aqui va la clave"}
+                      containerElement= {<div style={{height: '100%'}} />}
+                      loadingElement={<p>Mapa</p>}
+                      mapElement={<div style={{height:'100%'}} />}
+                    />
+                </div>
                 <div>
                     <div>
                         <h4 id="clima"></h4>

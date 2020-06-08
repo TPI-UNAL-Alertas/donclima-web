@@ -159,3 +159,4 @@ const FormSignUp = props =>{
         );
     
 }
+export default FormSignUp;
