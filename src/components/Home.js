@@ -13,10 +13,10 @@ class Home extends React.Component{
             <div>
                 <div>
                     <Map
-                      googleMapURL= {"https://maps.googleapis.com/maps/api/js?key=aqui va la clave"}
-                      containerElement= {<div style={{height: '100%'}} />}
-                      loadingElement={<p>Mapa</p>}
-                      mapElement={<div style={{height:'100%'}} />}
+                        googleMapURL= {"https://maps.googleapis.com/maps/api/js?key=aqui va la clave"}
+                        containerElement= {<div style={{height: '100%'}} />}
+                        loadingElement={<p>Mapa</p>}
+                        mapElement={<div style={{height:'100%'}} />}
                     />
                 </div>
                 <div>
