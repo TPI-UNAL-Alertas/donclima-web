@@ -11,6 +11,7 @@ class Router extends React.Component{
     state={   
         login:false,
         user:[],
+        forecast:[],
         clima:{}
     };
 
@@ -56,6 +57,18 @@ class Router extends React.Component{
         user:userIn
         }); 
         console.log("state nuevo",this.state.user.nombre);
+        //this.forescast();
+    }
+
+    // Actualiza informacion del pronostico por usuario logueado
+    weatherForecast=(newForecast)=>{
+        console.log("se recive pronostico",newForecast);
+
+        this.setState({
+            forecast:newForecast        
+        }); 
+        console.log("state nuevo",this.state.forecast.humedad);
+        //this.forescast();
     }
 
     render() {
@@ -72,6 +85,9 @@ class Router extends React.Component{
                     <Route exact path="/" render={()=>(
                         <Home
                         pronostico={this.props.pronostico}
+                        weatherForecast={this.weatherForecast}
+                        forecast={this.state.forecast}
+
                       />
                     )}/>
                     <Route exact path="/signup" component={SignUp} />
