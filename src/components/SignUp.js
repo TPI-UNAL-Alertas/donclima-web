@@ -1,6 +1,7 @@
 import React from 'react';
 import FormSignUp from './FormSignUp';
 
+
 class SignUp extends React.Component{
     render() {
         return (
@@ -14,8 +15,7 @@ class SignUp extends React.Component{
                         </div>
 
                     </div>
-                </div>
-                
+                </div>             
             </div>
         );
     }

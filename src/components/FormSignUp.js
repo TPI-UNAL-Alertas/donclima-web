@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "firebase/auth";
 import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
+import {departamentos}  from '../colombia.json'
 
-const FormSignUp = props =>{
+const FormSignUp = props => {
         
     ///refs
     const lastnameUserRef=React.createRef();
@@ -15,10 +16,13 @@ const FormSignUp = props =>{
     const departmentRef=React.createRef();
     const cityRef=React.createRef();
 
+    const [departamento, setDepartamento] = useState("");
+    const [ciudades, setCiudades] = useState([]);
+
     const firebase = useFirebaseApp();
     const user = useUser();
 
-    const newUser= async (e)=>{
+    const newUser= async (e)=> {
         e.preventDefault();
 
 
@@ -45,7 +49,14 @@ const FormSignUp = props =>{
             });
 
             console.log('usuario',user);
+    }
 
+    const agregarCiudades = (departamento) => {
+        for(var i in departamentos) {
+            if (departamentos[i].departamento == departamento) {
+                setCiudades(departamentos[i].ciudades)
+            }
+        }
     }
     
         return (
@@ -110,9 +121,10 @@ const FormSignUp = props =>{
                 <div className="form-row">
                 <div className="col-md-7 mb-3">
                     <label htmlFor="validationCustom04">Departamento de residencia</label>
-                    <select ref={departmentRef} className="custom-select" id="validationCustom04" required>
-                        <option  disabled value="">Choose...</option>
-                        <option>...</option>
+                    <select ref={departmentRef} className="custom-select" id="validationCustom04" onChange={(event) => setDepartamento(event.target.value)} onClick={(event) => agregarCiudades(event.target.value)} required>
+                        {departamentos.map(({id, departamento}) => (
+                            <option key={id} value={departamento}>{departamento}</option>
+                        ))}
                     </select>
                     <div className="invalid-feedback">
                         Please select a valid state.
@@ -121,8 +133,9 @@ const FormSignUp = props =>{
                     <div className="col-md-5 mb-3">
                     <label htmlFor="validationCustom04">Ciudad</label>
                     <select ref={cityRef} className="custom-select" id="validationCustom04" required>
-                        <option  disabled value="">Choose...</option>
-                        <option>...</option>
+                        {ciudades.map((ciudad, i) => (
+                            <option key={i} value={ciudad}>{ciudad}</option>
+                        ))}
                     </select>
                     <div className="invalid-feedback">
                         Please select a valid state.
