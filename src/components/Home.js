@@ -24,6 +24,8 @@ class Home extends React.Component{
                         <h4 id="clima"></h4>
                         <Weather
                             pronostico={this.props.pronostico}
+                            weatherForecast={this.props.weatherForecast}
+                            forecast={this.props.forecast}
                         />
                     </div>
                     <div className="row justify-content-md-center">
