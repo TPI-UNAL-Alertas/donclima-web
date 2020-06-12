@@ -6,6 +6,8 @@ import SignUp from './SignUp';
 import LogIn from './LogIn';
 import Banner from './Banner';
 import Home from './Home';
+import Usuario from './Usuario';
+
 
 class Router extends React.Component{
     state={   
@@ -15,43 +17,19 @@ class Router extends React.Component{
         clima:{}
     };
 
-    componentDidMount() {
-        const loginLS = localStorage.getItem('login');
-        const userLS = localStorage.getItem('user');
-        this.setState({
-            clima: data,
-            login: JSON.parse(loginLS),
-            user: JSON.parse(userLS)
-        });
-        console.log(data);
-        this.props.agregarPronostico(data[0]);
-    };
-
-
-    componentDidUpdate(){
-        localStorage.setItem(
-          'login',
-          JSON.stringify(this.state.login)
-        );
-        localStorage.setItem(
-            'user',
-            JSON.stringify(this.state.user)
-        );
-      }
-
     // Actualiza el estado de la sesion en el state
     userLogin=(newLogin)=>{
         console.log('vengo del hijo', newLogin);
         
         this.setState({
-        login:newLogin
+            login:newLogin
         }); 
         console.log("sesion",this.state.login);
     };
 
     // Actualiza informacion del usuario logueado
     userSesion=(userIn)=>{
-        console.log("se recive usuario",userIn);
+        console.log("se recibe usuario",userIn);
 
         this.setState({
         user:userIn
@@ -97,6 +75,7 @@ class Router extends React.Component{
                             userSesion={this.userSesion}
                         />
                     )}/>
+                    <Route exact path="/usuario" component={Usuario} />
                 </Switch>
             </BrowserRouter>
         );

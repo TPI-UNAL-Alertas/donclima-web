@@ -4,6 +4,7 @@ import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
 import {departamentos}  from '../colombia.json'
 
+
 const FormSignUp = props => {
         
     ///refs
@@ -38,7 +39,7 @@ const FormSignUp = props => {
             console.log(name,city);
 
             await firebase.auth().createUserWithEmailAndPassword(email, password);
-            await firebase.database().ref('usuarios/'+document).set({
+            await firebase.database().ref('usuarios/'+ document).set({
                 nombre: name,
                 apellido: lastname,
                 correo: email,

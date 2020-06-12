@@ -1,25 +1,25 @@
-import React,{Suspense} from 'react';
+import React, { Suspense } from 'react';
 import "firebase/auth";
 import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
 
-const LogIn =(props)=>{
+const LogIn = (props) => {
 
-    const emailRef=React.createRef();
-    const passwordRef=React.createRef();
+    const emailRef = React.createRef();
+    const passwordRef = React.createRef();
 
     const firebase = useFirebaseApp();
     const user = useUser();
 
-    const login= (e)=>{
+    const login = (e) => { 
         e.preventDefault();
 
-        const email=emailRef.current.value;
-        const password=passwordRef.current.value;
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
         
         console.log("Email ingresaddo",emailRef.current.value);
 
-        logout();
+        // logout();
         // Envia true al state.login de Router para ocultar botones
         props.userLogin(true);
         
@@ -53,7 +53,7 @@ const LogIn =(props)=>{
     }
 
     // Consultar informacion del usuario en firebase
-    const findUser=(correoUsuario)=>{
+    const findUser = (correoUsuario) => {
 
         //console.log("correo usser",correoUsuario);
         //Consultar información del usuario logeado por email                
@@ -68,13 +68,12 @@ const LogIn =(props)=>{
             //console.log("Valor logueado", valorLogueado.val());
             // Envia el objeto de los datos del usuario al state del Router
             props.userSesion(valorLogueado.val());
-            console.log("Valor logueado", valorLogueado.val().nombre);
+            localStorage.setItem('usuario', JSON.stringify(valorLogueado.val()));
+            console.log("Valor logueado", valorLogueado.val());
             //console.log("Valor logueado", valorLogueado.val().documento);
 
-            });
-        
+            });     
         });
-
     }
     
     

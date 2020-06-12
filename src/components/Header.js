@@ -4,7 +4,7 @@ import "firebase/auth";
 import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
 
-const Header =props=>{
+const Header = (props) =>{
 
     
         const login=props.login;
@@ -51,6 +51,8 @@ const Header =props=>{
         }
         
         const dataUser=props.user;
+
+        console.log(dataUser);
         
         return (
             <header>
