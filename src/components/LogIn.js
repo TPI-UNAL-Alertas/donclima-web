@@ -17,59 +17,32 @@ const LogIn = (props) => {
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
         
-        console.log("Email ingresaddo",emailRef.current.value);
-
-        // logout();
-        // Envia true al state.login de Router para ocultar botones
         props.userLogin(true);
         
-        firebase.auth().signInWithEmailAndPassword(email, password).then(function(userLogin){
-            console.log("Email validado ...", userLogin.user.email);
-            findUser(userLogin.user.email); 
-            //console.log("user ....", user);
-            
-        });
-
-        /*firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // [START_EXCLUDE]
-            if (errorCode === 'auth/wrong-password') {
-              alert('Wrong password.');
-            } else {
-              alert(errorMessage);
-            }
-            console.log(error);
-            document.getElementById('quickstart-sign-in').disabled = false;
-            // [END_EXCLUDE]
-          });*/
-
-          
-          //console.log("user login", user);
-          //findUser(user);      
-          //window.location="/";
-        
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(function(userLogin) {
+            findUser(userLogin.user.email);
+            window.location.href = "/";
+        })
+        .catch(function(error) {
+            alert("Ha ocurrido un error en la autenticación " + error.message);
+        });        
     }
 
     // Consultar informacion del usuario en firebase
     const findUser = (correoUsuario) => {
 
-        //console.log("correo usser",correoUsuario);
         //Consultar información del usuario logeado por email                
         var ref = firebase.database().ref('usuarios');
         ref.orderByChild("correo").equalTo(correoUsuario).on("child_added",function(snapshot){
             
-        //console.log('Key', snapshot.key);
         // Coleccion 'usuarios' en firebase
         var usuarioLogueado = firebase.database().ref('usuarios/'+snapshot.key);
-        //console.log('Usuario:',usuarioLogueado);
-        usuarioLogueado.on("value", function(valorLogueado){
-            //console.log("Valor logueado", valorLogueado.val());
+        usuarioLogueado.on("value", function(valorLogueado) {
+
             // Envia el objeto de los datos del usuario al state del Router
             props.userSesion(valorLogueado.val());
             localStorage.setItem('usuario', JSON.stringify(valorLogueado.val()));
-            console.log("Valor logueado", valorLogueado.val());
             //console.log("Valor logueado", valorLogueado.val().documento);
 
             });     
@@ -79,9 +52,8 @@ const LogIn = (props) => {
     
     // Cierra sesion en firebase
     const logout = () => {
-        console.log('entra');
         firebase.auth().signOut();
-        console.log('sale');
+        localStorage.removeItem('usuario');
     }
         return (
             <div className="background-form">

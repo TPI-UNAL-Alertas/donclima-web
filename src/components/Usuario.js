@@ -30,8 +30,7 @@ const Usuario = props => {
             ciudad: cityRef.current.value,
             departamento: departmentRef.current.value,
             telefono: phoneRef.current.value
-        });
-       
+        });      
     }
     
     const agregarCiudades = (departamento) => {

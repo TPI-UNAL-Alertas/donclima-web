@@ -23,7 +23,7 @@ const FormSignUp = props => {
     const firebase = useFirebaseApp();
     const user = useUser();
 
-    const newUser= async (e)=> {
+    const newUser = async (e)=> {
         e.preventDefault();
 
 
@@ -36,9 +36,15 @@ const FormSignUp = props => {
             department=departmentRef.current.value,
             city=cityRef.current.value;
 
-            console.log(name,city);
 
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
+            await firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(function() {
+                window.location.href = "/";
+            })
+            .catch(function(error) {
+                alert("Algo ha ocurrido: " + error.message);
+            });
+            
             await firebase.database().ref('usuarios/'+ document).set({
                 nombre: name,
                 apellido: lastname,
@@ -49,7 +55,7 @@ const FormSignUp = props => {
                 ciudad: city
             });
 
-            console.log('usuario',user);
+            console.log('usuario', user);
     }
 
     const agregarCiudades = (departamento) => {
