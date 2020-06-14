@@ -4,10 +4,9 @@ import "firebase/auth";
 import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
 
+
 const Header = (props) => {
 
-    
-        const login = props.login;
         const firebase=useFirebaseApp();        
 
         // Cierra sesion en firebase
@@ -47,10 +46,10 @@ const Header = (props) => {
                         </li>
                         </ul>
                         { !(localStorage.getItem('usuario')) &&
-                        <form className="form-inline my-2 my-lg-0">
-                            <Link to="/login"><button to="/login" className="btn btn-outline-info my-2 my-sm-0 menu" type="submit">Iniciar Sesión</button></Link>
-                            <Link to="/signup"><button className="btn btn-info my-2 my-sm-0 menu" type="submit">Registrarse</button></Link>
-                        </form>
+                            <form className="form-inline my-2 my-lg-0">
+                                <Link to="/login"><button to="/login" className="btn btn-outline-info my-2 my-sm-0 menu" type="submit">Iniciar Sesión</button></Link>
+                                <Link to="/signup"><button className="btn btn-info my-2 my-sm-0 menu" type="submit">Registrarse</button></Link>
+                            </form>
                         }
                         { localStorage.getItem('usuario') &&
                             <div className="row">
