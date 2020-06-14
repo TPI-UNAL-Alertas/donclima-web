@@ -17,6 +17,30 @@ class Router extends React.Component{
         clima:{}
     };
 
+    componentDidMount() {
+        if(localStorage.getItem('user')!==null){        
+        const loginLS = localStorage.getItem('login');
+        const userLS = localStorage.getItem('user');
+        this.setState({
+            clima: data,
+            login: JSON.parse(loginLS),
+            user: JSON.parse(userLS)
+        });}
+        console.log(data);
+        this.props.agregarPronostico(data[0]);
+    };
+
+    componentDidUpdate(){
+        localStorage.setItem(
+          'login',
+          JSON.stringify(this.state.login)
+        );
+        localStorage.setItem(
+            'user',
+            JSON.stringify(this.state.user)
+        );
+      };
+
     // Actualiza el estado de la sesion en el state
     userLogin=(newLogin)=>{
         console.log('vengo del hijo', newLogin);
