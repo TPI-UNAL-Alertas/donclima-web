@@ -45,7 +45,7 @@ const FormSignUp = props => {
                 alert("Algo ha ocurrido: " + error.message);
             });
             
-            await firebase.database().ref('usuarios/'+ document).set({
+            await firebase.database().ref('usuarios/' + document).set({
                 nombre: name,
                 apellido: lastname,
                 correo: email,
