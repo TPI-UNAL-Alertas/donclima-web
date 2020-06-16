@@ -1,17 +1,115 @@
 
 .background-form {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/Nevada-Apartadero-Merida-Venezuela.jpg");
   background-size: cover;
   padding: 0px;
   margin: 0px;
 }
 
 .shadow-form {
-  margin: 20px;
+  margin-top: 20px;
   padding: 10px;
   opacity: 80%;
   filter: invert(1);
   text-align: center;
+}
+
+.shadow-map {
+  margin-top: 20px;
+  padding: 10px;
+  opacity: 80%;
+  text-align: center;
+  height: 80%;
+}
+
+.shadow-map-home {
+  height: 100%;
+}
+
+.home-page{
+  margin-left: 100px !important;
+  margin-right: 100px !important;
+}
+
+.article-page{
+  margin-top: 10px !important;
+  margin-left: 100px !important;
+  margin-right: 100px !important;
+}
+
+.don-clima{
+  padding: 40px;
+}
+
+.circulo {
+  margin-top: 20px;
+  padding: 50px;
+  width: 180px;
+  height: 180px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background: #858F23;
+}
+
+.circulo-azul {
+  margin-top: 30px;
+  padding: 50px;
+  width: 180px;
+  height: 180px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background: #E68807;
+}
+
+.menu-page{
+  background-color: #858F23;
+}
+
+.card-ideam{
+  background-color: #E68807 !important;
+}
+
+.card-heladas{
+  background-color: #41D5E9 !important;
+}
+
+.card-tips{
+  background-color: #FAC708 !important;
+}
+
+.card-impactos{
+  padding: 10px;
+}
+
+.button-green{
+  background-color: #858F23 !important;
+  border-color: #858F23 !important;
+}
+
+.button-green-outline{
+  border-color: #858F23 !important;
+  color: #858F23 !important;
+}
+
+.button-blue{
+  background-color: #41D5E9 !important;
+  border-color: #41D5E9 !important;
+}
+
+.button-blue-outline{
+  border-color: #41D5E9 !important;
+  color: #41D5E9 !important;
+}
+
+.button-yellow{
+  background-color: #FAC708 !important;
+  border-color: #FAC708 !important;
+}
+
+.button-yellow-outline{
+  border-color: #FAC708 !important;
+  color: #FAC708 !important;
 }
 
 .forms {
@@ -21,6 +119,41 @@
 
 .menu {
   margin: 10px;
+}
+
+.logo-menu{
+  width: 50px;
+  margin-right: 15px;
+}
+
+.logo-title{
+  z-index: 999;
+  position: absolute;
+  width: 100%;
+  padding-top: 60px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.logo-signup{
+  width: 100%;
+  margin-top: 0px;
+  filter: invert(1);
+}
+
+.logo-login{
+  width: 100%;
+  margin-top: 0px;
+  filter: invert(1);
+  padding-left: 40%;
+  padding-right: 40%;
+}
+
+.logo-don{
+  width: 100%;
+  margin-top: 10%;
+  padding-left: 20%;
+  padding-right: 10%;
 }
 
 .card {
@@ -75,4 +208,33 @@
   to {
     transform: rotate(360deg);
   }
+}
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#mapSearchContainer {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  height: 30px;
+  width: 180px;
+  z-index: 110;
+  font-size: 10pt;
+  color: #5d5d5d;
+  border: solid 1px #bbb;
+  background-color: #f8f8f8;
+}
+
+.pointer {
+  position: absolute;
+  top: 86px;
+  left: 60px;
+  z-index: 99999;
+}
+
+.geocoder-control-input {
+  background-image: url("https://raw.githubusercontent.com/Esri/esri-leaflet-geocoder/master/src/img/search.png");
 }
