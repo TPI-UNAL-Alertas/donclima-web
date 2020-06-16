@@ -1,69 +1,86 @@
 import React from 'react';
 import Weather from './Weather';
 import Impacts from './Impacts';
-import Map from './Map';
 import Tips from './Tips';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilePdf,faSnowflake,faClipboardCheck} from '@fortawesome/free-solid-svg-icons'
+import { faFilePdf, faSnowflake, faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
+import AutomaticProcess from './AutomaticProcess';
+import Process from './Process';
 
+class Home extends React.Component {
+    
+    state = {
+        forecast: [],
+        alert: [],
+        alertAll: []
+    
+    }
 
-class Home extends React.Component{
+    // Actualiza informacion del pronostico por usuario logueado
+    weatherForecast = (newForecast) => {
+        console.log('Home:Se esta guardando el dato:', newForecast);
+        this.setState({forecast: newForecast});
+    }
+
+    weatherAlert = (newAlert) => {
+        this.setState({alert: newAlert});
+    }
+
+    weatherAlertAll = (newAlertAll) => {
+        this.setState({alertAll: newAlertAll});
+    }
+
     render() {
         return (
             <div>
                 <div>
-                    <Map
-                        googleMapURL= {"https://maps.googleapis.com/maps/api/js?key=aqui va la clave"}
-                        containerElement= {<div style={{height: '100%'}} />}
-                        loadingElement={<p>Mapa</p>}
-                        mapElement={<div style={{height:'100%'}} />}
-                    />
-                </div>
-                <div>
-                    <div>
+                    <div className="home-page shadow-sm p-3 mb-5 bg-white rounded">
                         <h4 id="clima"></h4>
+                        
                         <Weather
-                            pronostico={this.props.pronostico}
-                            weatherForecast={this.props.weatherForecast}
                             forecast={this.props.forecast}
+                            alert={this.props.alert}
+                            alertAll={this.props.alertAll}
                         />
                     </div>
-                    <div className="row justify-content-md-center">
-                        <div className="card text-white bg-info mb-3" >
+                    <div className="row justify-content-md-center home-page shadow-sm p-3 mb-5 bg-white rounded">
+                        <div className="card text-white card-ideam mb-3" >
                             
-                            <div className="card-header"><FontAwesomeIcon icon={faFilePdf} /> PDF</div>
+                            <div className="card-header"><h4 className="text-center"><FontAwesomeIcon icon={faFilePdf} /> PDF</h4></div>
                             <div className="card-body">
                                 <h5 className="card-title">Boletín IDEAM</h5>
-                                <p className="card-text">Descargue el boletín completo expedido por el  IDEAM, haciendo click aquí.</p>
+                                <p className="card-text">Descargue el boletín completo expedido por el  IDEAM, haciendo click <a href="http://www.pronosticosyalertas.gov.co/boletines-e-informes-tecnicos" className="card-link text-white" target="_blank"><strong className="h5"><em>aquí</em></strong></a>.</p>
                             </div>
                         </div>
                         
-                        <div className="card text-white bg-warning mb-3">
-                            <div className="card-header"><FontAwesomeIcon icon={faSnowflake} /> Heladas</div>
+                        <div className="card text-white card-heladas mb-3">
+                            <div className="card-header"><h4 className="text-center"><FontAwesomeIcon icon={faSnowflake} /> Heladas</h4></div>
                             <div className="card-body">
                                 <h5 className="card-title">Afectaciones causadas por las Heladas</h5>
-                                <p className="card-text">Como impacta la llegada de las heladas a la población campesina.</p>
+                                <p className="card-text">Cómo impacta la llegada de las heladas a la población campesina.</p>
+                                <p className="text-center"><a href="#impactos" className="card-link text-white scroll"><strong className="h5"><em>click aquí</em></strong></a></p>
                             </div>
                         </div>
-                        <div className="card text-white bg-success mb-3">
-                            <div className="card-header"><FontAwesomeIcon icon={faClipboardCheck} /> Tips</div>
+                        <div className="card text-white card-tips mb-3">
+                            <div className="card-header"><h4 className="text-center"><FontAwesomeIcon icon={faClipboardCheck} /> Tips</h4></div>
                             <div className="card-body">
                                 <h5 className="card-title">Consejos para prevenir los daños</h5>
-                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p className="card-text">Algunos tips para mitigar los daños causados por las heladas.</p>
+                                <p className="text-center"><a href="#consejos" className="card-link text-white"><strong className="h5"><em>click aquí</em></strong></a></p>
                             </div>
                         </div>
 
                     </div>
                     <div>
                         <h4 id="impactos"></h4>
-                        <Impacts/>
+                        <Impacts />
                     </div>
                     <div>
                         <h4 id="consejos"></h4>
-                        <Tips/>
-                    </div>                    
-                
-                </div>                                
+                        <Tips />
+                    </div>
+
+                </div>
             </div>
         );
     }

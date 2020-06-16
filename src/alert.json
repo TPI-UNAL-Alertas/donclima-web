@@ -1,0 +1,54 @@
+[
+    {
+      "Cod_Div": "PN",
+      "Latitud": 4.649937,
+      "Longitud": -74.106715,
+      "Fenomeno": "Heladas",
+      "Nivel": "Alerta Amarilla",
+      "Municipio": "BOGOTA. D. C.",
+      "Departamento": "BOGOTA. D.C.",
+      "Region": "SAB",
+      "Fecha": "2020-06-16",
+      "Hora": "10:34",
+      "Sinopsis": "En diversos sectores de la sabana colombiana, se preven heladas entre moderadas y fuertes. Por lo anterior, se recomienda revise la sesión de consejos para prevenir los daños."
+    },
+    {
+      "Cod_Div": "PN",
+      "Latitud": 4.579392,
+      "Longitud": -74.215431,
+      "Fenomeno": "Heladas",
+      "Nivel": "Alerta Amarilla",
+      "Municipio": "SOACHA",
+      "Departamento": "CUNDINAMARCA",
+      "Region": "SAB",
+      "Fecha": "2020-06-16",
+      "Hora": "10:34",
+      "Sinopsis": "En diversos sectores de la sabana colombiana, se preven heladas entre moderadas y fuertes. Por lo anterior, se recomienda revise la sesión de consejos para prevenir los daños."
+    },
+    {
+      "Cod_Div": "PN",
+      "Latitud": 4.737205,
+      "Longitud": -74.344594,
+      "Fenomeno": "Heladas",
+      "Nivel": "Alerta Amarilla",
+      "Departamento": "CUNDINAMARCA",
+      "Municipio": "BOJACA",
+      "Region": "AND",
+      "Fecha": "2020-06-16",
+      "Hora": "10:34",
+      "Sinopsis": "En diversos sectores de la sabana colombiana, se preven heladas entre moderadas y fuertes. Por lo anterior, se recomienda revise la sesión de consejos para prevenir los daños."
+    },
+    {
+      "Cod_Div": "PN",
+      "Latitud": 4.67998418740079,
+      "Longitud": -74.29473136690441,
+      "Fenomeno": "Heladas",
+      "Nivel": "Alerta Amarilla",
+      "Departamento": "CUNDINAMARCA",
+      "Municipio": "MOSQUERA",
+      "Region": "AND",
+      "Fecha": "2020-06-16",
+      "Hora": "10:34",
+      "Sinopsis": "En diversos sectores de la sabana colombiana, se preven heladas entre moderadas y fuertes. Por lo anterior, se recomienda revise la sesión de consejos para prevenir los daños."
+    }
+  ]

@@ -2,11 +2,16 @@ import React from 'react';
 import img1 from '../img/banner1.png';
 import img2 from '../img/banner2.png';
 import img3 from '../img/banner3.png';
+import title from '../img/logo/logo1.png';
 
 class Banner extends React.Component{
     render() {
         return (
             <div id="carouselExampleCaptions" className="carousel slide" data-ride="carousel">
+                <div>
+                    <img className="logo-title" src={title}/>
+                </div>
+                
                 <ol className="carousel-indicators">
                     <li data-target="#carouselExampleCaptions" data-slide-to="0" className="active"></li>
                     <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
@@ -16,22 +21,22 @@ class Banner extends React.Component{
                     <div className="carousel-item active">
                     <img src={img1} className="d-block w-100" alt="..."/>
                     <div className="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h5></h5>
+                        <p></p>
                     </div>
                     </div>
                     <div className="carousel-item">
                     <img src={img2} className="d-block w-100" alt="..."/>
                     <div className="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h5></h5>
+                        <p></p>
                     </div>
                     </div>
                     <div className="carousel-item">
                     <img src={img3} className="d-block w-100" alt="..."/>
                     <div className="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                        <h5></h5>
+                        <p></p>
                     </div>
                     </div>
                 </div>
