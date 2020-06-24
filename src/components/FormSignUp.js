@@ -3,6 +3,7 @@ import "firebase/auth";
 import "firebase/database";
 import { useFirebaseApp, useUser } from 'reactfire';
 import { departamentos } from '../colombia.json'
+import moment from 'moment';
 
 const FormSignUp = props => {
 
@@ -23,28 +24,28 @@ const FormSignUp = props => {
     const user = useUser();
     const markerUserValue = props.markerUser;
 
-    const newUser = (e) => {
+    const newUser = async (e) => {
         e.preventDefault();
 
-        if(markerUserValue === null || markerUserValue.length === 0){
+        if (markerUserValue === null || markerUserValue.length === 0) {
             alert("Por favor indique en el mapa la ubicación de su residencia");
             return;
         }
-        
+
         const name = nameUserRef.current.value,
             lastname = lastnameUserRef.current.value,
             document = documentRef.current.value,
             email = emailRef.current.value,
             phone = phoneRef.current.value,
             password = passwordRef.current.value,
-            department = departmentRef.current.value,
-            city = cityRef.current.value,
+            department = departmentRef.current.value.toUpperCase(),
+            city = cityRef.current.value.toUpperCase(),
             lat = markerUserValue[0].lat,
             lng = markerUserValue[0].lng;
 
         if (document !== null && document.length > 0) {
 
-            firebase.auth().createUserWithEmailAndPassword(email, password)
+            await firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(function () {
 
                     firebase.database().ref('usuarios/' + document).set({
@@ -56,12 +57,15 @@ const FormSignUp = props => {
                         departamento: department,
                         ciudad: city,
                         latitud: lat,
-                        longitud: lng
+                        longitud: lng,
+                        departamento_municipio: department + '-' + city
                     });
 
+                    //Asociar pronostico y alerta al usuario
+                    associateForecast();
                     alert("Registro realizado exitosamente");
 
-                    //window.location.href = "/";
+                    window.location.href = "/";
                 })
                 .catch(function (error) {
                     alert("Se presento el siguiente error: " + error.message);
@@ -71,6 +75,59 @@ const FormSignUp = props => {
         }
 
 
+    }
+
+    const associateForecast = () => {
+
+        const document = documentRef.current.value,
+            latitud = markerUserValue[0].lat,
+            longitud = markerUserValue[0].lng;
+
+        var latitudS, longitudS, ref;
+        var currentDate = moment().format("YYYY-MM-DD");
+
+        const department = departmentRef.current.value.toUpperCase(),
+            city = cityRef.current.value.toUpperCase();
+
+        //Buscar información del pronostico
+        ref = firebase.database().ref('pronostico/' + currentDate);
+
+        ref.orderByChild("departamento_municipio")
+            .equalTo(department + '-' + city)
+            .on("child_added", function (forecastValue) {
+
+                if (forecastValue.val() !== null) {
+                    latitudS = forecastValue.val().latitud - latitud;
+                    longitudS = forecastValue.val().longitud - longitud;
+
+                    firebase.database().ref('usuarioPronostico/' + document + '/' + currentDate + '/' + forecastValue.key).set({
+                        documento: document,
+                        latitud: latitudS,
+                        longitud: longitudS,
+                        total: latitudS + longitudS
+                    });
+                }
+            });
+
+        //Buscar información de alertas
+        ref = firebase.database().ref('alerta/' + currentDate);
+        ref.orderByChild("departamento_municipio")
+            .equalTo(department + '-' + city)
+            .on("child_added", function (alertValue) {
+
+                if (alertValue.val() !== null) {
+
+                    latitudS = alertValue.val().latitud - latitud;
+                    longitudS = alertValue.val().longitud - longitud;
+
+                    firebase.database().ref('usuarioAlerta/' + document + '/' + currentDate + '/' + alertValue.key).set({
+                        documento: document,
+                        latitud: latitudS,
+                        longitud: longitudS,
+                        total: latitudS + longitudS
+                    });
+                }
+            });
     }
 
     const agregarCiudades = (departamento) => {
@@ -187,11 +244,11 @@ const FormSignUp = props => {
                     </div>
                     </div>
                 </div>
-                </div>
-                <button className="btn btn-outline-light btn-form button-blue-outline" type="submit">Registrarse</button>
-            </form>
-            
-        );
-    
+            </div>
+            <button className="btn btn-outline-light btn-form button-blue-outline" type="submit">Registrarse</button>
+        </form>
+
+    );
+
 }
 export default FormSignUp;

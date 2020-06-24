@@ -8,7 +8,6 @@ import Banner from './Banner';
 import Home from './Home';
 import ModifyUser from './ModifyUser';
 import DonClima from './DonClima';
-import { markersAlert, iconBlue } from './ConstMap';
 
 class Router extends React.Component {
     state = {
@@ -33,8 +32,8 @@ class Router extends React.Component {
         //this.props.weatherForecast;
         this.props.agregarPronostico(data[0]);
         
-    };
 
+    };
 
     componentDidUpdate() {
         localStorage.setItem(
@@ -45,32 +44,25 @@ class Router extends React.Component {
             'user',
             JSON.stringify(this.state.user)
         );
+        
     }
 
     // Actualiza el estado de la sesion en el state
     userLogin = (newLogin) => {
-        console.log('vengo del hijo', newLogin);
-
         this.setState({
             login: newLogin
         });
-        console.log("sesion", this.state.login);
     };
 
     // Actualiza informacion del usuario logueado
     userSesion = (userIn) => {
-        //console.log("se recive usuario",userIn);
-
         this.setState({
             user: userIn
         });
-        //console.log("state nuevo",this.state.user.nombre);
-        //this.forescast();
     }
 
     // Actualiza informacion del pronostico por usuario logueado
     weatherForecast = (newForecast) => {
-        console.log('Route:Se esta guardando el dato:', newForecast);
         this.setState({forecast: newForecast});
     }
 
@@ -118,4 +110,5 @@ class Router extends React.Component {
         );
     }
 }
+
 export default Router;

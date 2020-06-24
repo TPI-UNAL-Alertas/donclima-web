@@ -1,7 +1,6 @@
 import React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import ReactLeafletSearch from "react-leaflet-search";
-import L from 'leaflet';
 import LocateControl from './LocateControl';
 import { iconPosition, iconSearch } from './ConstMap';
 

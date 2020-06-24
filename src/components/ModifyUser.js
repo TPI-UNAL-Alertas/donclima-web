@@ -6,11 +6,19 @@ import MapAppUser from './MapAppUser';
 class ModifyUser extends React.Component {
 
     state = {
-        markerUser: []
+        markerUser: [],
+        user: []
     }
 
     markerUser = (newMarkerUser) => {
         this.setState({ markerUser: newMarkerUser })
+    }
+
+    // Actualiza informacion del usuario logueado
+    userSesion = (userIn) => {
+        this.setState({
+            user: userIn
+        });
     }
 
     render() {
@@ -31,6 +39,7 @@ class ModifyUser extends React.Component {
                             <hr />
                             <FormUser
                                 markerUser={this.state.markerUser}
+                                userSesion={this.userSesion}
                             />
                         </div>
 

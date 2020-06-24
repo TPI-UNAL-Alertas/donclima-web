@@ -570,7 +570,6 @@
             "Arbel\u00e1ez",
             "Beltr\u00e1n",
             "Bituima",
-            "Bogot\u00e1",
             "Bojac\u00e1",
             "Cabrera",
             "Cachipay",
@@ -1294,6 +1293,13 @@
             "La Primavera",
             "Puerto Carre\u00f1o",
             "Santa Rosal\u00eda"
+        ]
+    },
+    {  
+        "id":32,
+        "departamento":"Bogot\u00e1. D. C.",
+        "ciudades":[              
+            "Bogot\u00e1. D. C."
         ]
     }
 ]
