@@ -19,6 +19,9 @@ class SignUp extends React.Component {
                 <div className="row">
                     <div className="col-md-5">
                         <div className="shadow-sm p-3 mb-5 bg-white rounded shadow-map">
+                            <div className="col-md-12">
+                                <h5>Seleccione en el mapa su ubicación de residencia</h5>
+                            </div>
                             <MapAppUser
                                 markerUser={this.markerUser}
                             />
@@ -26,15 +29,15 @@ class SignUp extends React.Component {
                     </div>
                     <div className="col-md-7">
                         <div className="shadow-sm p-3 mb-5 bg-white rounded shadow-form">
-                        <div className="row justify-content-md-center">
-                            <div className="col-md-2 media">
-                                <img className="logo-signup align-self-center mr-3" src={person}/>
+                            <div className="row justify-content-md-center">
+                                <div className="col-md-2 media">
+                                    <img className="logo-signup align-self-center mr-3" src={person} />
+                                </div>
+                                <div className="col-md-8 media-body">
+                                    <h2>Información	de	Registro</h2>
+                                </div>
+
                             </div>
-                            <div className="col-md-8 media-body">
-                                <h2>Información	de	Registro</h2>
-                            </div>
-                            
-                        </div>
                             <hr />
                             <FormSignUp
                                 markerUser={this.state.markerUser}

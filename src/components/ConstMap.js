@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-const iconRed = new L.Icon({
+export const iconRed = new L.Icon({
   iconUrl: require('../img/alert-red.png'),
   iconSize: [50, 45], // tamaño del icono     
   shadowSize: [50, 64], // tamaño de la sombra     
@@ -8,7 +8,7 @@ const iconRed = new L.Icon({
   popupAnchor: [0, -40] // punto relativo al marcador desde donde se deberá abrir el popup     
 });
 
-const iconYellow = new L.Icon({
+export const iconYellow = new L.Icon({
   iconUrl: require('../img/alert-yellow.png'),
   iconSize: [50, 45], // tamaño del icono     
   shadowSize: [50, 64], // tamaño de la sombra     
@@ -16,7 +16,7 @@ const iconYellow = new L.Icon({
   popupAnchor: [0, -40] // punto relativo al marcador desde donde se deberá abrir el popup     
 });
 
-const iconOrange = new L.Icon({
+export const iconOrange = new L.Icon({
   iconUrl: require('../img/alert-orange.png'),
   iconSize: [50, 45], // tamaño del icono     
   shadowSize: [50, 64], // tamaño de la sombra     
@@ -65,5 +65,7 @@ export const markersAlert = [
   { position: { lng: -74.2376129, lat: 4.5790386 }, text: 'Alta probabilidad de heladas', icon: iconRed }, //Soacha-Reserva
   { position: { lng: -74.2336564, lat: 4.5882942 }, text: 'Posible ocurrencia de heladas', icon: iconOrange }, //Soacha-Veredita
   { position: { lng: -74.2336353, lat: 4.579395 }, text: 'Posible ocurrencia de heladas', icon: iconOrange }, //Soacha-ParqueCamp9
-  { position: { lng: -74.2359171, lat: 4.5857101 }, text: 'Alta probabilidad de heladas', icon: iconRed } //Soacha-Humedal
+  { position: { lng: -74.2359171, lat: 4.5857101 }, text: 'Alta probabilidad de heladas', icon: iconRed }, //Soacha-Humedal
+  { position: { lng: -74.23083906913917, lat: 4.5815795209953825 }, text: 'Alta probabilidad de heladas', icon: iconRed } //Soacha-Humedal
+  
 ];

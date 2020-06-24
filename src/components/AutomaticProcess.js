@@ -10,26 +10,20 @@ const AutomaticProcess = props => {
 
     const firebase = useFirebaseApp();
     const dataUserRoot = { email: 'donclima@donclima.com', password: '12345678' };
-/*
+
     //Cron para cargar el pronostico de día.
     var cron = require('node-cron');
-    var conCron = 0;
-    cron.schedule('* * * * *', () => {
-        console.log('Inicio medio minuto', conCron);
-        if (conCron == 0) {
-            //console.log('Se ejecuta cada medio minuto');
-            //loadForecast();
-            if (localStorage.getItem('usuario') === null) {
-                showForecast();
-            }
-            conCron++;
-        }
-        //console.log('Fin medio minuto');
-    });*/
+    cron.schedule('00 04 * * *', () => {
+        console.log('Se ejecuta a las 4 de la mañana');
+        loadForecast();
+    });
 
-    const loadForecast = () => {
+    //Método para cargar el pronostico y alertas del día.
+    const loadForecast = async () => {
         firebase.auth().signInWithEmailAndPassword(dataUserRoot.email, dataUserRoot.password).then(function (userLogin) {
             var cont = 0;
+            var currentDate = moment().format("YYYY-MM-DD");
+
             data.map(forecastDay => {
                 firebase.database().ref('pronostico/' + forecastDay['Fecha'] + '/' + cont).set({
                     cobertura_total_nubosa: forecastDay['Cobertura total nubosa'],
@@ -43,21 +37,22 @@ const AutomaticProcess = props => {
                     longitud: forecastDay['Longitud'],
                     municipio: forecastDay['Municipio'],
                     precipitacion: forecastDay['Precipitacion (mm/h)'],
-                    municipio: forecastDay['Presion'],
+                    presion: forecastDay['Presion'],
                     probabilidad_tormenta: forecastDay['Probabilidad de Tormenta'],
                     pronostico: forecastDay['Pronostico'],
                     punto_rocio: forecastDay['Punto de Rocio'],
                     region: forecastDay['Region'],
                     temperatura: forecastDay['Temperatura'],
-                    velocidad_viento: forecastDay['Velocidad del Viento']
+                    velocidad_viento: forecastDay['Velocidad del Viento'],
+                    departamento_municipio: forecastDay['Departamento'] + '-' + forecastDay['Municipio']
                 });
                 cont++;
             });
 
-            //Cargar alarmas
+            //Cargar alertas
             cont = 0;
             alertData.map(dataUpload => {
-                firebase.database().ref('alerta/' + dataUpload['Fecha'] + '/' + cont).set({
+                firebase.database().ref('alerta/' + currentDate + '/' + cont).set({
                     cod_div: dataUpload['Cod_Div'],
                     latitud: dataUpload['Latitud'],
                     longitud: dataUpload['Longitud'],
@@ -66,85 +61,81 @@ const AutomaticProcess = props => {
                     municipio: dataUpload['Municipio'],
                     departamento: dataUpload['Departamento'],
                     region: dataUpload['Region'],
-                    fecha: dataUpload['Fecha'],
+                    fecha: currentDate,
                     hora: dataUpload['Hora'],
-                    sinopsis: dataUpload['Sinopsis']
+                    sinopsis: dataUpload['Sinopsis'],
+                    departamento_municipio: dataUpload['Departamento'] + '-' + dataUpload['Municipio']
                 });
                 cont++;
             });
-            firebase.auth().signOut();
-            //showForecast();
+
+            //Luego de cargas el pronostico y alertas se deben asociar a cada usuario
+            associateForecastUser();
         });
 
     }
 
-    const showForecast = () => {
+    //Método para asociar cada usuario al pronostico y si aplica a la alerta.
+    const associateForecastUser = async () => {
+        var latitudS, longitudS, ref;
+        var currentDate = moment().format("YYYY-MM-DD");
 
-        if (localStorage.getItem('usuario') === null) {
-            console.log('Entro******showForecast***');
-            firebase.auth().signInWithEmailAndPassword(dataUserRoot.email, dataUserRoot.password).then(function (userLogin) {
-                var currentDate = moment().format("YYYY-MM-DD");
-                var currentTime = moment().format("HH:mm");
-                //Buscar información del pronostico
-                var ref = firebase.database().ref('pronostico/' + currentDate);
-                ref.orderByChild("hora").limitToLast(1).on("child_added", function (snapshot) {
-                    //console.log('Key', snapshot.key);
-                    var forecastFound = firebase.database().ref('pronostico/' + currentDate + '/' + snapshot.key);
-                    forecastFound.on("value", function (forecastValue) {
-                        // Envia los valores de pronostico al state del Router
-                        props.weatherForecast(forecastValue.val());
+        //Buscar información del pronostico
+        firebase.database().ref('usuarios').on("child_added", function (userData) {
+            if (userData.val() !== null) {
+
+                firebase.database().ref('pronostico/' + currentDate)
+                    .orderByChild("departamento_municipio")
+                    .equalTo(userData.val().departamento_municipio)
+                    .on("child_added", function (forecastValue) {
+
+                        if (forecastValue.val() !== null) {
+
+                            latitudS = forecastValue.val().latitud - userData.val().latitud;
+                            longitudS = forecastValue.val().longitud - userData.val().longitud;
+
+                            firebase.database().ref('usuarioPronostico/' + userData.val().documento + '/' + currentDate + '/' + forecastValue.key).set({
+                                documento: userData.val().documento,
+                                latitud: latitudS,
+                                longitud: longitudS,
+                                total: Math.abs(latitudS + longitudS)
+                            });
+
+                        }
                     });
-                });
+            }
+        });
 
-                //Buscar información de alertas
-                var ref = firebase.database().ref('alerta/' + currentDate);
-                //console.log('Ref:',ref);
-                ref.orderByChild("latitud").equalTo(4.649937).once("value", function (alertValue) {
-                    //console.log('value', alertValue);
-                    if (alertValue.val() !== null) {
-                        //console.log('Valor alerta', alertValue.val());
-                        props.weatherAlert(alertValue.val()[0]);
-                    }
-                });
+        //Buscar información de alertas
+        firebase.database().ref('usuarios').on("child_added", function (userData) {
 
-                //Consultar todas las alertas
-                ref.orderByChild("latitud").once("value", function (alertValue) {
-                    props.weatherAlertAll(alertValue.val());
-                });
-                firebase.auth().signOut();
-            });
-        } else {
-            var latitud = JSON.parse(localStorage.getItem('usuario')).latitud;
-            var longitud = JSON.parse(localStorage.getItem('usuario')).longitud;
-            console.log('Cargue por lat:', latitud);
-            console.log('Cargue por lng:', longitud);
-            firebase.auth().signInWithEmailAndPassword(dataUserRoot.email, dataUserRoot.password).then(function (userLogin) {
-                var currentDate = moment().format("YYYY-MM-DD");
-                var currentTime = moment().format("HH:mm");
-                //Buscar información del pronostico
-                var ref = firebase.database().ref('pronostico/' + currentDate);
-                ref.orderByChild("latitud").equalTo(latitud).on("child_added", function (forecastValue) {
-                    //console.log("Val:",forecastValue.val());                    
-                    if (forecastValue.val() !== null) {
-                        props.weatherForecast(forecastValue.val());
-                    }
-                });
+            if (userData.val() !== null) {
 
-                //Buscar información de alertas
-                var ref = firebase.database().ref('alerta/' + currentDate);
-                //console.log('Ref:',ref);
-                ref.orderByChild("latitud").equalTo(latitud).on("child_added", function (alertValue) {
-                    //console.log('Se encontro alerta para el usuario', alertValue);
-                    if (alertValue.val() !== null) {
-                        //console.log('Valor de la alerta Usuario', alertValue.val());
-                        props.weatherAlert(alertValue.val());
-                    }
-                });
+                firebase.database().ref('alerta/' + currentDate)
+                    .orderByChild("departamento_municipio")
+                    .equalTo(userData.val().departamento_municipio)
+                    .on("child_added", function (alertValue) {
 
-                firebase.auth().signOut();
-            });
-        }
+                        if (alertValue.val() !== null) {
+
+                            latitudS = alertValue.val().latitud - userData.val().latitud;
+                            longitudS = alertValue.val().longitud - userData.val().longitud;
+
+                            firebase.database().ref('usuarioAlerta/' + userData.val().documento + '/' + currentDate + '/' + alertValue.key).set({
+                                documento: userData.val().documento,
+                                latitud: latitudS,
+                                longitud: longitudS,
+                                total: Math.abs(latitudS + longitudS)
+                            });
+
+                        }
+                    });
+            }
+        });
+
+        firebase.auth().signOut();
     }
+
     return (
         <div>
         </div>

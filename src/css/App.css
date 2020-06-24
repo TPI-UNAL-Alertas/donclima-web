@@ -237,4 +237,96 @@
 
 .geocoder-control-input {
   background-image: url("https://raw.githubusercontent.com/Esri/esri-leaflet-geocoder/master/src/img/search.png");
+
 }
+
+.ir-arriba { 
+  width: 60px;
+  height: 60px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background: #858F23;
+
+	display:none;
+  padding: 0px;
+	font-size:40px;
+	color:#fff;
+	cursor:pointer;
+	position: fixed;
+	bottom:20px;
+  right:20px;
+  z-index: 1000;
+  opacity: 60%;
+  text-align: center;
+}
+
+
+@media only screen and (max-width: 700px) {
+
+  #rt-main, #rt-header, .rt-container, .rt-container .rt-grid-8, .rt-container .rt-grid-8,.rt-container .rt-grid-9, .footer-container, .rt-container .rt-grid-3, .rt-container .rt-grid-6 {width: 99%;}
+  
+   body{min-width: 100%;}
+
+   h1{text-align: center;}
+  
+   .rt-container .rt-grid-4 {
+     display: none;
+    }
+
+   .home-page{
+      margin-left: 30px !important;
+      margin-right: 30px !important;
+      justify-content: center;
+    }
+    .article-page{
+      margin-left: 30px !important;
+      margin-right: 30px !important;
+    }
+    .card {
+      margin: auto;
+    }
+
+    .card-title {
+      text-align: center;
+    }
+
+    .card-text {
+      text-align: justify;
+      font-size: 14px;
+    }
+
+    .shadow-map-home,.shadow-map {
+      height: 300px;
+      margin-bottom: 5px !important;
+    }
+
+    .logo-signup {
+      padding-left: 120px;
+      padding-right: 120px;
+    }
+
+    .logo-title{
+      padding-top: 15px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    .circulo,.circulo-azul {
+      margin-top: 18px;
+      padding: 15px;
+      width: 100px;
+      height: 100px;
+    }
+
+    .ir-arriba { 
+      right: 44%;
+    }
+
+    .btn{
+      margin: 0px;
+      margin-right: 10px;
+    }
+
+  
+  }

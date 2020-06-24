@@ -12,6 +12,12 @@ const Header = (props) => {
     const firebase = useFirebaseApp();
     const dataUserRoot = { email: 'donclima@donclima.com', password: '12345678' };
 
+    /*var cron = require('node-cron');
+    cron.schedule('* * * * *', () => {
+        console.log('Inicio medio minuto');
+        showForecast();
+    });*/
+
     // Cierra sesion en firebase
     const logout = async (e) => {
         e.preventDefault();
@@ -26,41 +32,78 @@ const Header = (props) => {
         props.userLogin(false);
     }
 
-    const showForecast = () => {
-        
+    const showForecast = async () => {
+
         if (localStorage.getItem('usuario') === null) {
-            //console.log('Entro******showForecast***');
-            var latitud = 4.67998418740079;
-            var longitud = -74.29473136690441;
+
+            var latlng = JSON.parse(localStorage.getItem('latitudLogitud'));
+            var latitud = latlng.lat;
+            var longitud = latlng.lng;
+            var currentDate = moment().format("YYYY-MM-DD");
+
             firebase.auth().signInWithEmailAndPassword(dataUserRoot.email, dataUserRoot.password).then(function (userLogin) {
-                var currentDate = moment().format("YYYY-MM-DD");
-                var currentTime = moment().format("HH:mm");
+
                 //Buscar información del pronostico
-                var ref = firebase.database().ref('pronostico/' + currentDate);
-                ref.orderByChild("latitud").equalTo(latitud).on("child_added", function (forecastValue) {
-                    //console.log("Val:",forecastValue.val());                    
+                var totalMin;
+                var refMin = null;
+                var latitudS, longitudS, ref;
+                ref = firebase.database().ref('pronostico/' + currentDate);
+                ref.orderByChild("latitud").on("child_added", function (forecastValue) {
+
                     if (forecastValue.val() !== null) {
-                        props.weatherForecast(forecastValue.val());
+
+                        latitudS = forecastValue.val().latitud - latitud;
+                        longitudS = forecastValue.val().longitud - longitud;
+                        if (refMin !== null) {
+
+                            if (totalMin > (latitudS + longitudS)) {
+                                totalMin = Math.abs(latitudS + longitudS);
+                                refMin = forecastValue.key;
+                                props.weatherForecast(forecastValue.val());
+                            }
+                        } else {
+                            totalMin = Math.abs(latitudS + longitudS);
+                            refMin = forecastValue.key;
+                            props.weatherForecast(forecastValue.val());
+                        }
                     }
                 });
 
+                props.weatherAlert({ "cod_div": "", "departamento": "", "fecha": "", "fenomeno": "", "hora": "", "latitud": 0, "longitud": 0, "municipio": "", "nivel": "", "region": "", "sinopsis": "" });
+
+                refMin = null;
                 //Buscar información de alertas
-                var ref = firebase.database().ref('alerta/' + currentDate);
-                //console.log('Ref:',ref);
-                ref.orderByChild("latitud").equalTo(latitud).on("child_added", function (alertValue) {
-                    //console.log('Se encontro alerta para el usuario', alertValue);
+                ref = firebase.database().ref('alerta/' + currentDate);
+                ref.orderByChild("latitud").on("child_added", function (alertValue) {
                     if (alertValue.val() !== null) {
-                        //console.log('Valor de la alerta Usuario', alertValue.val());
-                        props.weatherAlert(alertValue.val());
+
+                        latitudS = alertValue.val().latitud - latitud;
+                        longitudS = alertValue.val().longitud - longitud;
+
+                        if (Math.abs(latitudS + longitudS) < 0.05) {
+
+                            if (refMin !== null) {
+                                if (totalMin > Math.abs(latitudS + longitudS)) {
+                                    totalMin = Math.abs(latitudS + longitudS);
+                                    refMin = alertValue.key;
+                                    props.weatherAlert(alertValue.val());
+                                }
+                            } else {
+                                totalMin = Math.abs(latitudS + longitudS);
+                                refMin = alertValue.key;
+                                props.weatherAlert(alertValue.val());
+                            }
+                        }
                     }
                 });
 
                 //Consultar todas las alertas
                 ref.orderByChild("latitud").once("value", function (alertValue) {
+                    localStorage.setItem('alertarAll', JSON.stringify(alertValue.val()));
                     props.weatherAlertAll(alertValue.val());
                 });
             });
-        } 
+        }
     }
 
     const dataUser = props.user;
@@ -68,7 +111,7 @@ const Header = (props) => {
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark font-weight-bold">
-                <img className="logo-menu" src={logo} onClick={showForecast}/>
+                <img className="logo-menu" src={logo} onClick={showForecast} />
                 <a className="navbar-brand" href="/donclima">Don Clima</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -80,13 +123,13 @@ const Header = (props) => {
                             <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/#clima">Pronostico</a>
+                            <a id="navClima" className="nav-link" href="/#clima">Pronostico</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/#impactos">Impactos</a>
+                            <a id="navImpactos" className="nav-link" href="/#impactos">Impactos</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/#consejos">Consejos</a>
+                            <a id="navConsejos" className="nav-link" href="/#consejos">Consejos</a>
                         </li>
                     </ul>
                     {!(localStorage.getItem('usuario')) &&
